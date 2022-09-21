@@ -1,0 +1,32 @@
+// Creating the target table
+.create table ['fleet data continuous] (
+    DeviceData: string, 
+    LocalDateTime: string, 
+    DeviceState: string, 
+    CoreTemp: long, 
+    CoreStatus: string, 
+    Compass: long, 
+    Altitude: long, 
+    Speed: long, 
+    PayloadWeight: long, 
+    EventData: string
+)
+
+// Creating the data mapping
+.create table ['fleet data continuous'] ingestion csv mapping 'fleetDataContinuousMap'
+'['
+       '{"Column": "DeviceData", "Properties": {"Ordinal": "0"}},'
+        '{"Column": "LocalDateTime", "Properties": {"Ordinal": "1"}},'
+        '{"Column": "DeviceState", "Properties": {"Ordinal": "2"}},'
+        '{"Column": "CoreTemp", "Properties": {"Ordinal": "3"}},'
+        '{"Column": "CoreStatus", "Properties": {"Ordinal": "4"}},'
+        '{"Column": "Compass", "Properties": {"Ordinal": "5"}},'
+        '{"Column": "Altitude", "Properties": {"Ordinal": "6"}},'
+        '{"Column": "Speed", "Properties": {"Ordinal": "7"}},'
+        '{"Column": "PayloadWeight", "Properties": {"Ordinal": "8"}},'
+        '{"Column": "EventData", "Properties": {"Ordinal": "9"}},'
+']'
+
+// Verifying data was ingested
+['fleet data simplified']
+| count 

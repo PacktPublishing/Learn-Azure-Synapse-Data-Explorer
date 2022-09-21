@@ -1,0 +1,8 @@
+// Enabling streaming ingestion at the table level
+.alter table fleetdata policy streamingingestion enable
+
+// Enabling streaming ingestion at the database level
+.alter database drone-telemetry policy streamingingestion enable
+
+// Disabling streaming ingestion on individual tables after enabling it for the database
+.alter table myothertable policy streamingingestion disable.

@@ -1,0 +1,17 @@
+// Creating the target table
+.create table ['fleet data pipeline] (
+    DeviceData: string, 
+    LocalDateTime: string, 
+    DeviceState: string, 
+    CoreTemp: long, 
+    CoreStatus: string, 
+    Compass: long, 
+    Altitude: long, 
+    Speed: long, 
+    PayloadWeight: long, 
+    EventData: string
+)
+
+// Verifying your data was inserted
+['fleet data pipeline']
+| take 100 
