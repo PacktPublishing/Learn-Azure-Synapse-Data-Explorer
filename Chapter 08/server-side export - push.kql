@@ -1,7 +1,8 @@
 // 1) Export to cloud storage
+
 .export async compressed to csv 
     (
-        h@"https://dronetelemetrydatalake.blob.core.windows.net/data-exports?sp=racwdlmeo&st=2022-11-11T07:07:32Z&se=2022-11-11T15:07:32Z&spr=https&sv=2021-06-08&sr=c&sig=sS7i2Ja%2F3%2F%2FrsS%2FQr%2B0bXmol%2By8%2BgCxUXBIsyJsfWo0%3D" 
+        h@"https://<storageaccountname>.blob.core.windows.net/data-exports?<SASKeyHere>" 
     ) with (
         namePrefix="DeviceError-",
         includeHeaders="all",
@@ -10,13 +11,15 @@
   <| ['fleet data'] | where  DeviceState == 'DeviceError' | project DeviceData, CoreTemp
 
 // 2) Export to a SQL table
+
   .export to sql fleet_data
-    h@"Server=tcp:droneanalytics.database.windows.net,1433;Database=droneanalyticssql;Authentication=Active Directory Integrated;Connection Timeout=30;"
+    h@"Server=tcp:<AzureSQLInstanceName>.database.windows.net,1433;Database=<DatabaseName>;Authentication=Active Directory Integrated;Connection Timeout=30;"
         with (createifnotexists="true")
     <| ['fleet data'] | where LocalDateTime between (datetime(2021-11-01) .. datetime(2021-11-02))
 
 // 3) Export to an external table. 
 // First create the table... 
+
 .create external table TopPayloads (DeviceData:string, LocalDateTime:datetime, PayloadWeight:long)  
 kind=storage 
 dataformat=csv 
@@ -24,6 +27,31 @@ dataformat=csv
    h@"https://<storageaccountname>.blob.core.windows.net/data-exports?<SASKeyHere>" 
 ) 
 
-// ... and now perform the data export task. 
+// ... and now perform the data export task... 
+
 .export to table TopPayloads 
 <| ['fleet data'] | top 10000 by PayloadWeight desc | project DeviceData, LocalDateTime, PayloadWeight
+
+// ... and then verifying that it worked. 
+
+external_table('TopPayloads')
+| take 10
+
+// 4) Configuring continuous data ingestion. 
+
+.create-or-alter continuous-export ContinuousTelemetryData
+to table TopPayloads
+with
+(intervalBetweenRuns=2h)
+<| 
+['fleet data'] 
+| project DeviceData, LocalDateTime, PayloadWeight
+
+// ... show the job details. 
+
+.show continuous-export ContinuousTelemetryData 
+| project ExternalTableName, IntervalBetweenRuns, IsDisabled, LastRunResult, IsRunning
+
+// .. disabling the continuous data export job: 
+ 
+ .disable continuous-export ContinuousTelemetryData

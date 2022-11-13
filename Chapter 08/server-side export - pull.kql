@@ -1,0 +1,3 @@
+.set-or-append ['fleet data - failures'] <|
+   ['fleet data']
+   | where  DeviceState == 'DeviceError'
