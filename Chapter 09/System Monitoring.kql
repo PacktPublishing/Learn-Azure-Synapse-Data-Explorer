@@ -1,0 +1,41 @@
+// 1 - Checking your Data Explorer pool capacity 
+
+.show capacity 
+
+// 2 - Changing policy capacity limits
+
+.alter cluster policy capacity ```
+{
+  "IngestionCapacity": {
+    "ClusterMaximumConcurrentOperations": 512
+  }
+}```
+
+// 3 - Monitoring query execution 
+
+.show commands-and-queries
+| where State == 'Failed'
+| order by StartedOn desc 
+
+// 3 - Stopping user queries
+
+.cancel query 'Studio;7330d14b-f5de-46cb-acd9-6f30ffebf844' with (reason='Canceled by admin')
+
+// 4 - Queries with the most TotalCPU time in the last 24 hours
+
+.show commands-and-queries 
+| where StartedOn > ago(24h)
+| order by TotalCpu desc
+| project User, Application, TotalCpu, State, Text
+
+// 5 - Showing table metadata
+
+.show table ['fleet data'] details
+| project DatabaseName, TableName, TotalOriginalSize, TotalRowCount, AuthorizedPrincipals
+
+// 6 - Reviewing object metadata and changes
+
+.show journal 
+| where EntityName == 'fleet data'
+| order by EventTimestamp desc
+| project EventTimestamp, Event, OriginalEntityState, ChangeCommand, User
