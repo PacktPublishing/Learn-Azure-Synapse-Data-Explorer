@@ -85,7 +85,7 @@
 // 10 - Defining hot-cache windows
 
 .alter table ['drone-telemetry'].['fleet data'] policy caching 
-        hot = 30d,
+        hot = 7d,
         hot_window = datetime(2022-11-24) .. datetime(2022-11-28),
         hot_window = datetime(2022-12-01) .. datetime(2022-12-31)
 
