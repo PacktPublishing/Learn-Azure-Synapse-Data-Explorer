@@ -1,5 +1,5 @@
 // Creating the target table
-.create table ['fleet data pipeline] (
+.create table ['fleet data pipeline'] (
     DeviceData: string, 
     LocalDateTime: string, 
     DeviceState: string, 
