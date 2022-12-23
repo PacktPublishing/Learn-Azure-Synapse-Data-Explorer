@@ -1,0 +1,80 @@
+// 1. Reviewing the database merge policy
+
+.show database ['drone-telemetry'] policy merge
+
+// 2. Adding tags at ingestion time
+
+// 2.a - we will create a destination table first to perform data ingestion.  
+
+.create table ['fleet data with tags'] (
+    DeviceData: string, 
+    LocalDateTime: string, 
+    DeviceState: string, 
+    CoreTemp: long, 
+    CoreStatus: string, 
+    Compass: long, 
+    Altitude: long, 
+    Speed: long, 
+    PayloadWeight: long, 
+    EventData: string
+) 
+
+// 2.b - Now, we'll perform ingestion with tags. 
+
+.ingest into table ['fleet data with tags']
+    'https://dronetelemetrydatalake.blob.core.windows.net/raw-data/drone-telemetry-simplified.csv?sp=r&st=2022-12-23T12:35:01Z&se=2022-12-30T20:35:01Z&spr=https&sv=2021-06-08&sr=c&sig=8OFOuVnfha0%2BqhDF2eIqfNJlm5xl33BGDTmnxXjxTGc%3D' 
+    with (ignoreFirstRecord=true, tags='["drop-by:2023-03-23"]') 
+
+// 3. Altering tags on all extents of a table
+
+.alter extent tags ('Drone telemetry data. Do not delete.') <| .show table ['fleet data with tags'] extents
+
+// 4. Adding tags on all extents of a table
+
+.alter-merge extent tags ('Data source: telemetry data lake.') <| .show table ['fleet data with tags'] extents
+
+// 5. Reviewing extent tags
+
+.show table ['fleet data with tags'] extents
+| project ExtentId, Tags
+
+// 6. Moving extents. 
+// 6.a We'll create a new table first. 
+
+.create table ['fleet data with tags - archive'] (
+    DeviceData: string, 
+    LocalDateTime: string, 
+    DeviceState: string, 
+    CoreTemp: long, 
+    CoreStatus: string, 
+    Compass: long, 
+    Altitude: long, 
+    Speed: long, 
+    PayloadWeight: long, 
+    EventData: string
+) 
+
+// 6.b Now we'll move all extents from one table to the other.
+
+.move extents all from table ['fleet data with tags'] to table ['fleet data with tags - archive']
+
+// 6.c Move specific extents.
+
+.move extents from table ['fleet data with tags - archive'] to table ['fleet data with tags'] (ee5ae751-9a79-488a-acd8-ccf58b315479)
+
+// 6.d Move extents based on their tags.
+
+.move extents to table ['fleet data with tags - archive'] <| .show table ['fleet data with tags'] extents | where Tags == 'drop-by:2023-03-23'
+
+// 6.e Dropping extents
+
+.drop extent 49aa2250-d8b8-4127-9049-739399e2a89f
+
+// 6.f Dropping extents after a certain age
+
+.drop extents <| .show database ['drone-telemetry'] extents | where MaxCreatedOn < now() - time(90d)
+
+// 6.g Checking what would happen if I ran the .drop exents command without acctually running it. 
+
+.drop extents whatif  <| .show database ['drone-telemetry'] extents | where MaxCreatedOn < now() - time(30d)
+
