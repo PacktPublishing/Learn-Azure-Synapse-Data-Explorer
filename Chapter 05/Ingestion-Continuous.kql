@@ -1,5 +1,5 @@
 // Creating the target table
-.create table ['fleet data continuous] (
+.create table ['fleet data continuous'] (
     DeviceData: string, 
     LocalDateTime: string, 
     DeviceState: string, 
