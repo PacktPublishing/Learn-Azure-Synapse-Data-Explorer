@@ -1,4 +1,5 @@
-// Creating the target table
+// 05.3 - Creating the target table
+
 .create table ['fleet data simplified'] (
     DeviceData: string, 
     LocalDateTime: string, 
@@ -12,13 +13,15 @@
     EventData: string
 )
 
-// Ingesting data
+// 05.4 - Ingesting data
 // Note: you need to replace the URL bellow with the access token you generated for your storage account. 
+
 .ingest into table ['fleet data simplified'] 
     'https://dronetelemetrydatalake.blob.core.windows.net/raw-data/drone-telemetry-simplified.csv?sp=r&st=2022-09-14T05:25:46Z&se=2022-09-14T13:25:46Z&spr=https&sv=2021-06-08&sr=b&sig=0CC1u1wSdu9IL4Am%2F6QUF7kcUY90fExt4MIooKZJnVs%3D' 
     with (ignoreFirstRecord=true)
 
-// To verify data successfully loaded into your table, run the following simple query: 
+// 05.5 - To verify data successfully loaded into your table, run the following simple query: 
+
 ['fleet data simplified'] 
 | project DeviceData, CoreTemp, Altitude
 | take 10

@@ -1,4 +1,5 @@
-// Creating the target table
+// 05.6 - Creating the target table
+
 .create table ['fleet data pipeline'] (
     DeviceData: string, 
     LocalDateTime: string, 
@@ -12,6 +13,7 @@
     EventData: string
 )
 
-// Verifying your data was inserted
+// 05.7 - Verifying your data was inserted
+
 ['fleet data pipeline']
 | take 100 

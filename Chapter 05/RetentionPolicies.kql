@@ -1,6 +1,8 @@
-// Showing the retention policy of a database 
+// 05.1 - Showing the retention policy of a database 
+
 .show database ['drone-telemetry'] policy retention
 
-// Changing the retention policy to 90 days and disabling recoverability
+// 05.2 - Changing the retention policy to 90 days and disabling recoverability
+
 .alter database ['drone-telemetry'] policy retention 
     "{\"SoftDeletePeriod\": \"90.00:00:00\", \"Recoverability\": \"Disabled\"}"

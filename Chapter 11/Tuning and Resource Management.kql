@@ -1,4 +1,4 @@
-// 1 - Creating a new workload group
+// 11.1 - Creating a new workload group
 
 .create-or-alter workload_group ['Engineering Department WG']  ```
 {
@@ -18,7 +18,7 @@
   }
 }```
 
-// 2 - Adding a request rate limit policy
+// 11.2 - Adding a request rate limit policy
 
 .alter-merge workload_group ['Engineering Department WG']  ```
 {
@@ -42,11 +42,11 @@
   ]
 } ```
 
-// 3 - Visualizing workload groups 
+// 11.3 - Visualizing workload groups 
 
 .show workload_groups
 
-// 4 - Setting a request classification policy
+// 11.4 - Setting a request classification policy
 
 .alter cluster policy request_classification '{"IsEnabled":true}' <|
     case(
@@ -56,15 +56,15 @@
       "default"
     )
 
-// 5 - Disabling the request classification policy: 
+// 11.5 - Disabling the request classification policy: 
 
 .alter-merge cluster policy request_classification '{"IsEnabled":false}'
 
-// 6 - Showing the request classification policy: 
+// 11.6 - Showing the request classification policy: 
 
 .show cluster policy request_classification
 
-// 7 - Enabling the request queueing policy
+// 11.7 - Enabling the request queueing policy
 
 .alter-merge workload_group default
 ```
@@ -74,26 +74,26 @@
   }
 } ```
 
-// 8 - Viewing a table's caching policy 
+// 11.8 - Viewing a table's caching policy 
 
 .show table ['drone-telemetry'].['fleet data'] policy caching 
 
-// 9 - Defining a caching policy 
+// 11.9 - Defining a caching policy 
 
 .alter table ['drone-telemetry'].['fleet data'] policy caching hot = 7d
 
-// 10 - Defining hot-cache windows
+// 11.10 - Defining hot-cache windows
 
 .alter table ['drone-telemetry'].['fleet data'] policy caching 
         hot = 7d,
         hot_window = datetime(2022-11-24) .. datetime(2022-11-28),
         hot_window = datetime(2022-12-01) .. datetime(2022-12-31)
 
-// 11 - Deleting the cache policy
+// 11.11 - Deleting the cache policy
 
 .delete table ['drone-telemetry'].['fleet data'] policy caching 
 
-// 12 - Using the same syntax for databases and clusters
+// 11.12 - Using the same syntax for databases and clusters
 
 .alter cluster policy caching hot = 7d
 

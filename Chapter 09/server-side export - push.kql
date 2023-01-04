@@ -1,4 +1,4 @@
-// 1) Export to cloud storage
+// 09.2 - Export to cloud storage
 
 .export async compressed to csv 
     (
@@ -10,14 +10,14 @@
     )
   <| ['fleet data'] | where  DeviceState == 'DeviceError' | project DeviceData, CoreTemp
 
-// 2) Export to a SQL table
+// 09.3 - Export to a SQL table
 
   .export to sql fleet_data
     h@"Server=tcp:<AzureSQLInstanceName>.database.windows.net,1433;Database=<DatabaseName>;Authentication=Active Directory Integrated;Connection Timeout=30;"
         with (createifnotexists="true")
     <| ['fleet data'] | where LocalDateTime between (datetime(2021-11-01) .. datetime(2021-11-02))
 
-// 3) Export to an external table. 
+// 09.4 - Export to an external table. 
 // First create the table... 
 
 .create external table TopPayloads (DeviceData:string, LocalDateTime:datetime, PayloadWeight:long)  
@@ -27,17 +27,17 @@ dataformat=csv
    h@"https://<storageaccountname>.blob.core.windows.net/data-exports?<SASKeyHere>" 
 ) 
 
-// ... and now perform the data export task... 
+// 09.5 - ... and now perform the data export task... 
 
 .export to table TopPayloads 
 <| ['fleet data'] | top 10000 by PayloadWeight desc | project DeviceData, LocalDateTime, PayloadWeight
 
-// ... and then verifying that it worked. 
+// 09.6 - ... and then verifying that it worked. 
 
 external_table('TopPayloads')
 | take 10
 
-// 4) Configuring continuous data ingestion. 
+// 09.7 - Configuring continuous data ingestion. 
 
 .create-or-alter continuous-export ContinuousTelemetryData
 to table TopPayloads
@@ -47,11 +47,11 @@ with
 ['fleet data'] 
 | project DeviceData, LocalDateTime, PayloadWeight
 
-// ... show the job details. 
+// 09.8 -  show the job details. 
 
 .show continuous-export ContinuousTelemetryData 
 | project ExternalTableName, IntervalBetweenRuns, IsDisabled, LastRunResult, IsRunning
 
-// .. disabling the continuous data export job: 
+// 09.9 -  disabling the continuous data export job: 
  
  .disable continuous-export ContinuousTelemetryData

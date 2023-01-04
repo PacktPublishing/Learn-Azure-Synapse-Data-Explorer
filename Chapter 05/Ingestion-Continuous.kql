@@ -1,4 +1,5 @@
-// Creating the target table
+// 05.8 - Creating the target table
+
 .create table ['fleet data continuous'] (
     DeviceData: string, 
     LocalDateTime: string, 
@@ -12,7 +13,8 @@
     EventData: string
 )
 
-// Creating the data mapping
+// 05.9 - Creating the data mapping
+
 .create table ['fleet data continuous'] ingestion csv mapping 'fleetDataContinuousMap'
 '['
        '{"Column": "DeviceData", "Properties": {"Ordinal": "0"}},'
@@ -27,6 +29,7 @@
         '{"Column": "EventData", "Properties": {"Ordinal": "9"}},'
 ']'
 
-// Verifying data was ingested
+// 05.10 - Verifying data was ingested
+
 ['fleet data simplified']
 | count 

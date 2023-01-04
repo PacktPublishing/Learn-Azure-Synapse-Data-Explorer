@@ -1,1 +1,3 @@
+// 02.1 - Creating a Data Explroer pool using the CLI
+
 az synapse kusto pool create --name "droneanalyticsadx" --resource-group "rg-AzureSynapse" --sku name="Compute optimized" size="Small" --workspace-name "drone-analytics" 

@@ -1,55 +1,66 @@
-// 6.1 - All rows, all columns 
+// 06.1 - All rows, all columns
+
 ['fleet data']
 
-// 6.2 - All rows, selecting a few columns
+// 06.2 - All rows, selecting a few columns
+
 ['fleet data']
 | project DeviceData, LocalDateTime, DeviceState, CoreTemp, BatteryTemp, Speed
 
-// 6.3 - Picking only five rows - limit and take are the same
+// 06.3 - Picking only five rows - limit and take are the same
+
 ['fleet data']
 | take 5
 | project DeviceData, LocalDateTime, DeviceState, CoreTemp, BatteryTemp, Speed
 
-// 6.4 - using top to get the FIRST few rows
+// 06.4 - using top to get the FIRST few rows
+
 ['fleet data']
 | top 5 by LocalDateTime asc
 | project DeviceData, LocalDateTime, DeviceState, CoreTemp, BatteryTemp, Speed
 
 
-// 6.5 - Filtering with where
+// 06.5 - Filtering with where
+
 ['fleet data']
 | where LocalDateTime >= datetime(2021-10-30) and LocalDateTime  <= datetime(2021-11-01)
 | project DeviceData, LocalDateTime, DeviceState, CoreTemp, BatteryTemp, Speed
 
-// 6.6 - Sorting
+// 06.6 - Sorting
+
 ['fleet data']
 | where LocalDateTime >= datetime(2021-10-30) and LocalDateTime  <= datetime(2021-11-01)
 | sort by CoreTemp desc
 | project DeviceData, LocalDateTime, DeviceState, CoreTemp, BatteryTemp, Speed
 
-// 6.7 - Derived columns using extend
+// 06.7 - Derived columns using extend
+
 ['fleet data']
 | limit 5
 | extend Hour = datetime_part("Hour", LocalDateTime), Minute = datetime_part("Minute", LocalDateTime)
 | project Hour, Minute, LocalDateTime
 
-// 6.8 - Aggregations 
+// 06.8 - Aggregations 
+
 ['fleet data']
 | summarize average_speed = avg(Speed) by DeviceState
 | order by average_speed desc
 
-// 6.9 - Using aggregations to get distinct values
+// 06.9 - Using aggregations to get distinct values
+
 ['fleet data']
 | summarize by DeviceState
 | order by DeviceState asc
 
-// 6.10 - Which days did we have the most deliveries?
+// 06.10 - Which days did we have the most deliveries?
+
 ['fleet data']
 | where DeviceState == 'Delivery'
 | summarize _count = count() by bin(LocalDateTime, 1d)
 | order by _count desc 
 
-// 6.11 - Can I put that in a chart?
+// 06.11 - Can I put that in a chart?
+
 ['fleet data']
 | where DeviceState == 'Delivery'
 | where LocalDateTime >= datetime(2021-11-01T00:00:00.000000Z) and LocalDateTime <= datetime(2021-11-15T23:59:59.999999Z)| summarize _count = count() by bin(LocalDateTime, 1d)
@@ -57,37 +68,43 @@
 | order by _count desc 
 | render timechart  
 
-// 6.12 - Average temperature per DeviceState each day
+// 06.12 - Average temperature per DeviceState each day
 // It looks like errors happen when temperature spike, or is too low 
+
 ['fleet data']
 | where LocalDateTime >= datetime(2021-11-01T00:00:00.000000Z) and LocalDateTime <= datetime(2021-11-01T23:59:59.999999Z)
 | summarize _count = avg(CoreTemp) by bin(LocalDateTime, 1h), DeviceState
 | render timechart  
 
-// 6.13 - Can I render here? 
+// 06.13 - Can I render here? 
+
 ['fleet data']
 | summarize temp = avg(CoreTemp) by DeviceState
 | project  DeviceState, temp
 | order by temp desc
 | render columnchart  
 
-// 6.14 - Percentiles
+// 06.14 - Percentiles
+
 ['fleet data']
 | summarize percentiles(CoreTemp, 25, 50, 75, 90, 95)
 
-// 6.15 - Time Series
+// 06.15 - Time Series
+
 ['fleet data']
 | make-series AvgTemp=avg(CoreTemp) default=0 on LocalDateTime 
     from datetime(2021-11-01) to datetime(2021-11-04) step 1d by DeviceState
 
-// 6.16 - Obtaining series stats
+// 06.16 - Obtaining series stats
+
 ['fleet data']
 | make-series AvgTemp=avg(CoreTemp) default=0
 on LocalDateTime from datetime(2021-11-01) to datetime(2021-11-04) step 1d by DeviceState
 | extend (MIN, min_idx, MAX, max_idx, AVG, STDEV, VAR) = series_stats(AvgTemp)
 | project MIN, MAX, AVG, STDEV, VAR
 
-// 6.17 - Detecting outliers
+// 06.17 - Detecting outliers
+
 ['fleet data']
 | make-series AvgRPM_Series=avg(Engine2RPM) default=0
 on LocalDateTime from datetime(2021-11-01) to datetime(2021-11-19) step 1d by DeviceState
@@ -97,7 +114,8 @@ on LocalDateTime from datetime(2021-11-01) to datetime(2021-11-19) step 1d by De
 | project LocalDateTime, DeviceState, AvgRPM, anomaly_score
 | order by LocalDateTime asc
 
-// 6.18 - Using linear regression
+// 06.18 - Using linear regression
+
 ['fleet data']
 | make-series AvgTemp_Series=avg(CoreTemp) default=0
 on LocalDateTime from datetime(2021-11-15T09:00:00.000000Z) to datetime(2021-11-15T23:59:59.999999Z) step 1h

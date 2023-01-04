@@ -1,8 +1,8 @@
-// 1 - Showing principals with access to the fleet data table
+// 12.1 - Showing principals with access to the fleet data table
 
 .show table ['fleet data'] principals
 
-// 2 - Adding users to a role
+// 12.2 - Adding users to a role
 
 .add database ['drone-telemetry'] admins 
     ('aaduser=adenor@periclesrocha.com', 
@@ -10,10 +10,10 @@
      'aaduser=plinio@periclesrocha.com') 
      'Adding new users'
 
- // 3 - Removing a specific user from a role
+ // 12.3 - Removing a specific user from a role
 
 .drop database ['drone-telemetry'] admins ('aaduser=adenor@periclesrocha.com')
  
- // 4 - Replacing all principals in a role to this one only
+ // 12.4 - Replacing all principals in a role to this one only
 
 .set database ['drone-telemetry'] admins ('aaduser=peri@periclesrocha.com') 'Replacing all roles'
