@@ -1,0 +1,4 @@
+['fleet data']
+| summarize ['Average Temperature'] = avg(CoreTemp) by DeviceState
+| order by ['Average Temperature'] desc 
+| render columnchart 
