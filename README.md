@@ -41,9 +41,8 @@ The code will look like the following:
 **Following is what you need for this book:**
 If you are a data engineer, data analyst, or business analyst working with unstructured data and looking to learn how to maximize the value of such data, this book is for you. 
 If you already have experience working with Azure Synapse and want to incorporate unstructured data into your data science project, you’ll also find plenty of useful information in this book. 
-To maximize your learning experience, familiarity with data and performing simple queries using SQL or KQL is recommended. 
+To maximize your learning experience, familiarity with data and performing simple queries using SQL or KQL is recommended. Basic knowledge of Python will help you get more from the examples.	
 
-Basic knowledge of Python will help you get more from the examples.	
 With the following software and hardware list you can run all code files present in the book (Chapter 1-13).
 
 ### Software and Hardware List
