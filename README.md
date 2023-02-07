@@ -43,7 +43,7 @@ If you are a data engineer, data analyst, or business analyst working with unstr
 If you already have experience working with Azure Synapse and want to incorporate unstructured data into your data science project, you’ll also find plenty of useful information in this book. 
 To maximize your learning experience, familiarity with data and performing simple queries using SQL or KQL is recommended. Basic knowledge of Python will help you get more from the examples.	
 
-With the following software and hardware list you can run all code files present in the book (Chapter 1-13).
+With the following software and hardware list you can run all code files present in the book.
 
 ### Software and Hardware List
 
