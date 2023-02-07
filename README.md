@@ -62,7 +62,8 @@ more quickly.
 The Azure portal and Azure Synapse Studio are web-based tools that are used to manage, develop,
 and build solutions for Azure Synapse Data Explorer. Microsoft supports the latest versions of the
 following browsers: Microsoft Edge, Safari (Mac only), Chrome, and Firefox.
-To install Power BI Desktop, visit https://learn.microsoft.com/power-bi/fundamentals/desktop-get-the-desktop. To install the Microsoft Azure App, visit http://aka.ms/getazureapp on your mobile device,
+To install Power BI Desktop, visit https://learn.microsoft.com/power-bi/fundamentals/desktop-get-the-desktop. 
+To install the Microsoft Azure App, visit http://aka.ms/getazureapp on your mobile device,
 or look for the Microsoft Azure App in your device’s app store.
 
 
