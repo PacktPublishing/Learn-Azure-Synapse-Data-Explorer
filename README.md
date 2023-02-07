@@ -44,7 +44,7 @@ If you already have experience working with Azure Synapse and want to incorporat
 To maximize your learning experience, familiarity with data and performing simple queries using SQL or KQL is recommended. 
 
 Basic knowledge of Python will help you get more from the examples.	
-With the following software and hardware list you can run all code files present in the book (Chapter 1-14).
+With the following software and hardware list you can run all code files present in the book (Chapter 1-13).
 
 ### Software and Hardware List
 
@@ -58,7 +58,7 @@ more quickly.
 | Azure Synapse Studio                   | Windows, Mac OS X, and Linux (Any) |                                                            
 | Azure Portal                           | Windows, Mac OS X, and Linux (Any) |
 | Power BI desktop                       | Windows                            |
-| Microsoft Azure App                     | iOS or Android                     |
+| Microsoft Azure App                    | iOS or Android                     |
 
 The Azure portal and Azure Synapse Studio are web-based tools that are used to manage, develop,
 and build solutions for Azure Synapse Data Explorer. Microsoft supports the latest versions of the
