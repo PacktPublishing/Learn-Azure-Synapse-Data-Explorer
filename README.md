@@ -35,7 +35,7 @@ The code will look like the following:
 "RequestQueuingPolicy": {
 "IsEnabled": true
 }
-} 
+}``` 
 
 
 **Following is what you need for this book:**
