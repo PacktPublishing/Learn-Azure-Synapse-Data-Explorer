@@ -84,3 +84,8 @@ member of Tau Beta Pi. He currently works at Microsoft as a product manager in t
 engineering team. Originally from São Paulo, Brazil, Peri worked in Europe for three years before
 relocating to the USA in 2016. In his spare time, he enjoys playing music, studying karate, and reading.
 He lives near Redmond, WA, with his wife, daughter, two dogs, and nine guitars.
+
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781803233956">https://packt.link/free-ebook/9781803233956 </a> </p>
