@@ -1,3 +1,11 @@
+
+### [Packt Conference : Put Generative AI to work on Oct 11-13 (Virtual)](https://packt.link/JGIEY)
+
+<b><p align='center'>[![Packt Conference](https://hub.packtpub.com/wp-content/uploads/2023/08/put-generative-ai-to-work-packt.png)](https://packt.link/JGIEY)</p></b> 
+3 Days, 20+ AI Experts, 25+ Workshops and Power Talks 
+
+Code: <b>USD75OFF</b>
+
 # Learn Azure Synapse Data Explorer	
 
 <a href="https://www.packtpub.com/product/learn-azure-synapse-data-explorer/9781803233956?utm_source=github&utm_medium=repository&utm_campaign=9781803233956"><img src="https://static.packt-cdn.com/products/9781803233956/cover/smaller" alt="Learn Azure Synapse Data Explorer" height="256px" align="right"></a>
